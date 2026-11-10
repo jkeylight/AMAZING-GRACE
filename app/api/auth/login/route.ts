@@ -8,8 +8,9 @@ export async function POST(req: Request) {
     if (!verifyPassword(password)) {
       return NextResponse.json({ error: "Invalid password" }, { status: 401 });
     }
+    const token = await createSessionToken();
     const res = NextResponse.json({ ok: true });
-    res.cookies.set(getSessionCookieName(), createSessionToken(), {
+    res.cookies.set(getSessionCookieName(), token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",

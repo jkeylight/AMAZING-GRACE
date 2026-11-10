@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookieName, verifySessionToken } from "@/lib/auth";
 
-export const runtime = "nodejs";
-
 const PUBLIC_PATHS = ["/login", "/api/auth/login"];
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (
@@ -23,7 +21,7 @@ export function middleware(req: NextRequest) {
   }
 
   const token = req.cookies.get(getSessionCookieName())?.value;
-  if (verifySessionToken(token)) {
+  if (await verifySessionToken(token)) {
     return NextResponse.next();
   }
 
