@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookieName, verifySessionToken } from "@/lib/auth";
 
+export const runtime = "nodejs";
+
 const PUBLIC_PATHS = ["/login", "/api/auth/login"];
 
 export function middleware(req: NextRequest) {
