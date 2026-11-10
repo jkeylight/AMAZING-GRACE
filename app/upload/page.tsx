@@ -40,7 +40,8 @@ async function extractEpubMeta(file: File): Promise<Meta> {
         const buf = await coverFile.async("uint8array");
         const lower = coverPath.toLowerCase();
         const type = lower.endsWith(".png") ? "image/png" : lower.endsWith(".webp") ? "image/webp" : "image/jpeg";
-        coverBlob = new Blob([buf], { type });
+        const bytes = new Uint8Array(buf);
+        coverBlob = new Blob([bytes.buffer as ArrayBuffer], { type });
       }
     }
     return { title, author, coverBlob };
